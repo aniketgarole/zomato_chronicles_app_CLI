@@ -1,8 +1,8 @@
 import uuid
 
 
-def addSnack(snack):
-    with open("../data/snacks.txt", "r") as file:
+def addDish(snack):
+    with open("../data/dishes.txt", "r") as file:
         contents = file.read()
         if contents == "":
             list = []
@@ -11,10 +11,36 @@ def addSnack(snack):
         
         list.append(snack)
         
-        with open("../data/snacks.txt", "w") as filew:
+        with open("../data/dishes.txt", "w") as filew:
             filew.write(str(list))
             print("\n            Snack has been added to the inventory successfully!!\n")
            
+
+
+def removeDish(id):
+    with open("../data/dishes.txt", "r") as filer:
+        contents = filer.read() 
+        if contents == "":
+            list = []
+            print("\n            Sorry, the inventory is empty")
+            return False
+
+        else:
+            list = eval(contents)
+            
+            deleted_snack = [x for x in list if x["id"] == id]
+            
+            if (len(deleted_snack)):
+                new_list = [x for x in list if x["id"] != id]
+
+                with open("../data/dishes.txt", "w") as filew:
+                    filew.write(str(new_list))
+                    print("\n            Snack has been removed successfully!!\n")
+                    return True
+
+            else:
+                print(f"\n            The snack with id {id} does not exist, please try different id")
+                return False
 
 
 
@@ -75,7 +101,7 @@ def mainFun():
                         continue
 
 
-                snack = {
+                dish = {
                     "id": id, 
                     "name": name, 
                     "price": price, 
@@ -83,7 +109,31 @@ def mainFun():
                     "quantity": quantity
                     }
                 
-                addSnack(snack)
+                addDish(dish)
+
+            
+            elif choice == 2:
+                flag = False
+                while True:
+                    remove_id = input("\n            Enter id to remove snack or enter 'back' to go back to menu: ")
+
+                    if remove_id != "back":
+
+                        value = removeDish(remove_id)
+
+                        if value:
+                            break
+                        else:
+                            flag = True
+                            break
+                            
+                    
+                    else:
+                        flag = True
+                        break
+
+                if flag:
+                    continue
            
         except ValueError:
                 
