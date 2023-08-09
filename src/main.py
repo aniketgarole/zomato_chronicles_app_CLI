@@ -196,6 +196,81 @@ def viewOrders():
 
 
 
+def changeOrderStatus(id):
+    with open("../data/orders.txt", "r") as filer:
+        contents = filer.read()
+        if contents == "":
+            list = []
+            print("\n           No orders exist!!")
+            return 
+        
+        else:
+            list = eval(contents)
+            order = [x for x in list if x["order_id"] == id] or []
+
+            
+
+            if (len(order)):
+                origional_order = order[0]
+                while True:
+                    try:
+                        new_status = int(input("""\n            choose the status of order from below
+            1. pending
+            2. dispatched
+            3. delivered
+                                               
+            """))
+                        
+                        if new_status == 1:
+                            order[0]['status'] = "pending"
+                            break
+
+                        elif new_status == 2:
+                            order[0]['status'] = "dispatched"
+                            break
+
+                        elif new_status == 3:
+                            order[0]['status'] = "delivered"
+                            break
+
+                        else:
+                            print("\n            Invalid option, Please select the option from above!!")
+                            continue
+                        
+                        
+                    except ValueError:
+                        print("\n            Please enter a number!!")
+                        continue
+                    
+
+                
+
+                    
+
+                
+                updated_order = order[0]
+
+
+
+                with open("../data/orders.txt", "w") as filew:
+                    updated_list_orders = [x if x != origional_order else updated_order for x in list]
+                    filew.write(str(updated_list_orders))
+                    if new_status == 1:
+                            print("\n            Order status has been changed to pending")
+                            
+
+                    elif new_status == 2:
+                        
+                        print("\n            Order status has been changed to dispatched")
+
+                    elif new_status == 3:
+                        
+                        print("\n            Order status has been changed to delivered")
+                            
+                    
+                    return True
+
+
 
 def mainFun():
     while True:
@@ -332,6 +407,17 @@ def mainFun():
 
             elif choice == 6:
                 viewOrders()
+
+
+            elif choice == 7:
+                order_id = input("\n            Enter order id: ")
+                changeOrderStatus(order_id)
+
+            
+            else:
+                
+                print("\n            Invalid option, choose the valid option!!")  
+
                     
            
         except ValueError:
