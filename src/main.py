@@ -276,7 +276,7 @@ def mainFun():
     while True:
         try:
 
-            choice = int(input("""\n\n           ********** Welcome to Mumbai Munchies **********
+            choice = int(input("""\n\n           ********** Welcome to Zomato Chronicles **********
                 
                 Please choose from the options below
                 1. Add dish to inventory
