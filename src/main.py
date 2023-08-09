@@ -1,3 +1,25 @@
+import uuid
+
+
+def addSnack(snack):
+    with open("../data/snacks.txt", "r") as file:
+        contents = file.read()
+        if contents == "":
+            list = []
+        else:
+            list = eval(contents)
+        
+        list.append(snack)
+        
+        with open("../data/snacks.txt", "w") as filew:
+            filew.write(str(list))
+            print("\n            Snack has been added to the inventory successfully!!\n")
+           
+
+
+
+
+
 def mainFun():
     while True:
         try:
@@ -5,10 +27,10 @@ def mainFun():
             choice = int(input("""\n\n           ********** Welcome to Mumbai Munchies **********
                 
                 Please choose from the options below
-                1. Add snack to inventory
-                2. Remove snack from inventory
-                3. Change availabililty of snack (yes/no)
-                4. Order snack
+                1. Add dish to inventory
+                2. Remove dish from inventory
+                3. Change availabililty of dish (yes/no)
+                4. Order dish
                 5. View inventory
                 6. View orders
                 7. Change order status              
@@ -24,20 +46,20 @@ def mainFun():
             
             
             elif choice == 1:
-                id = (input("            Enter snack id (number): "))
-                name = input("            Enter snack name: ")
+                id = (input("            Enter dish id (number): "))
+                name = input("            Enter dish name: ")
 
                 while True:
 
                     try:
-                        price = int(input("            Enter snack price: "))
+                        price = int(input("            Enter dish price: "))
                         break
                     except ValueError: 
                         print("\n            Please enter a number for price\n")
                         continue
 
                 while True:
-                    avail = input("            Enter snack availability (yes/no): ").lower()
+                    avail = input("            Enter dish availability (yes/no): ").lower()
                     if avail != "yes" and avail != "no":
                         print("\n            Please enter either 'yes' or 'no', no other values are accepted")
                     else:
@@ -46,7 +68,7 @@ def mainFun():
                 while True:
 
                     try:
-                        quantity = int(input("            Enter snack quantity: "))
+                        quantity = int(input("            Enter dish quantity: "))
                         break
                     except ValueError: 
                         print("\n            Please enter a number for quantity\n")
@@ -61,7 +83,7 @@ def mainFun():
                     "quantity": quantity
                     }
                 
-           
+                addSnack(snack)
            
         except ValueError:
                 
