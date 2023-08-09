@@ -95,8 +95,8 @@ def placeOrder(order):
             return False
         else:
             list = eval(content)
-            snack_id = order['snack_id']
-            snack = [x for x in list if x['id'] == snack_id] or []
+            order_id = order['order_id']
+            snack = [x for x in list if x['id'] == order_id] or []
 
             
 
@@ -152,7 +152,7 @@ def placeOrder(order):
                 
             
             else:
-                print(f"\n            Sorry, we don't have dish with id {snack_id} in our inventory, please try another dish!!")
+                print(f"\n            Sorry, we don't have dish with id {order_id} in our inventory, please try another dish!!")
                 return False
             
 
