@@ -17,6 +17,12 @@ def mainFun():
                 """))
             
 
+            if choice == 8:
+                print("\n           Thank you for the visit. Have a good day 😊")
+                print("\n           ********************************************\n")
+                break
+            
+
            
            
         except ValueError:
