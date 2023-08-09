@@ -154,6 +154,25 @@ def placeOrder(order):
             else:
                 print(f"\n            Sorry, we don't have dish with id {snack_id} in our inventory, please try another dish!!")
                 return False
+            
+
+
+
+def viewInventory():
+    with open("../data/dishes.txt", "r") as filer:
+        contents = filer.read()
+        if contents == "":
+            list = []
+        else:
+            list = eval(contents)
+        
+        print("\n           *************Inventory*************")
+        print("\n           {:<5} {:<10} {:<10} {:<10}".format("id", "name", "price", "quantity"))
+        print("           "+"=" * 40)
+        for row in list:
+            print("           {:<5} {:<10} {:<10} {:<10}".format(row["id"], row["name"], row["price"], row["quantity"]))
+
+
 
 
 
@@ -285,6 +304,10 @@ def mainFun():
                         break
                     else:
                         continue
+
+
+            elif choice == 5:
+                viewInventory()
                     
            
         except ValueError:
