@@ -82,6 +82,78 @@ def changeStatus(id):
             else:
                 print(f"\n            The dish with id '{id}' does not exist, please try different id\n")
                 return False
+            
+
+    
+
+def placeOrder(order):
+    with open("../data/dishes.txt", "r") as filer:
+        content = filer.read()
+        
+        if content == "":
+            print("\n            Sorry, your order cannot be placed, inventory is out of stock")
+            return False
+        else:
+            list = eval(content)
+            snack_id = order['snack_id']
+            snack = [x for x in list if x['id'] == snack_id] or []
+
+            
+
+            
+
+            if len(snack):
+                origional_snack = snack[0]
+                quantity_in_inv = snack[0]['quantity']
+                quantity_in_order = order['quantity']
+
+
+                if (quantity_in_inv >= quantity_in_order):
+                    updated_quantity = quantity_in_inv - quantity_in_order
+
+                    total_cost = quantity_in_order * snack[0]['price']
+                    
+                    snack[0]['quantity'] = updated_quantity
+
+                    if updated_quantity == 0:
+                        snack[0]['avail'] = "no"
+
+                    order["total_cost"] = total_cost
+
+                    updated_snack = snack[0]
+
+                    
+
+                    with open("../data/orders.txt", "r") as orderfiler:
+                        order_content = orderfiler.read()
+                        if order_content == "":
+                            order_list = []
+                        else: 
+                            order_list = eval(order_content)
+                        
+                        order_list.append(order)
+
+                        with open("../data/orders.txt", "w") as orderfilew:
+                            orderfilew.write(str(order_list))
+
+                            with open("../data/dishes.txt", "w") as snackfilew:
+                                updated_list_snacks = [x if x != origional_snack else updated_snack for x in list]
+
+                                snackfilew.write(str(updated_list_snacks))
+                                print("\n            Order placed successfully!!")
+                                print(f"\n            The total cost of your order is {total_cost} RS. !!")
+                                print("\n            Thank you for your patience, you will receive your order soon!!")
+                            return True
+
+
+                else:
+                    print(f"\n            Sorry we don't have {quantity_in_order} items available right now, please change your order!!")
+                    return False
+                
+            
+            else:
+                print(f"\n            Sorry, we don't have dish with id {snack_id} in our inventory, please try another dish!!")
+                return False
 
 
 
@@ -179,6 +251,41 @@ def mainFun():
             elif choice == 3:
                 id = input("\n            Enter id to change the availability of dish: ")
                 changeStatus(id)
+
+
+            elif choice == 4:
+                
+                while True:
+                    name = input("\n            Enter your name: ")
+                    id = input("\n            Enter id of the dish: ")
+
+                    while True:
+
+                        try:
+                            quantity = int(input("\n            Enter quanity: "))
+                            break
+                        except ValueError:
+                            print("\n            Please enter a number(interger, ie.1,2,3..) for quantity!!")
+                            continue
+                    
+                    order_id = str(uuid.uuid4())
+
+                    order = {
+                        "order_id": order_id,
+                        "name": name,
+                        "snack_id": id,
+                        "quantity": quantity,
+                        "status": "pending"
+                    }
+
+
+                    flag = placeOrder(order)
+
+                    if flag:
+                        break
+                    else:
+                        continue
+                    
            
         except ValueError:
                 
