@@ -87,6 +87,7 @@ def changeStatus(id):
     
 
 def placeOrder(order):
+    # print(order)
     with open("../data/dishes.txt", "r") as filer:
         content = filer.read()
         
@@ -95,8 +96,8 @@ def placeOrder(order):
             return False
         else:
             list = eval(content)
-            order_id = order['order_id']
-            snack = [x for x in list if x['id'] == order_id] or []
+            dish_id = order['dish_id']
+            snack = [x for x in list if x['id'] == dish_id] or []
 
             
 
@@ -152,7 +153,7 @@ def placeOrder(order):
                 
             
             else:
-                print(f"\n            Sorry, we don't have dish with id {order_id} in our inventory, please try another dish!!")
+                print(f"\n            Sorry, we don't have dish with id {dish_id} in our inventory, please try another dish!!")
                 return False
             
 
