@@ -22,7 +22,45 @@ def mainFun():
                 print("\n           ********************************************\n")
                 break
             
+            
+            elif choice == 1:
+                id = (input("            Enter snack id (number): "))
+                name = input("            Enter snack name: ")
 
+                while True:
+
+                    try:
+                        price = int(input("            Enter snack price: "))
+                        break
+                    except ValueError: 
+                        print("\n            Please enter a number for price\n")
+                        continue
+
+                while True:
+                    avail = input("            Enter snack availability (yes/no): ").lower()
+                    if avail != "yes" and avail != "no":
+                        print("\n            Please enter either 'yes' or 'no', no other values are accepted")
+                    else:
+                        break
+
+                while True:
+
+                    try:
+                        quantity = int(input("            Enter snack quantity: "))
+                        break
+                    except ValueError: 
+                        print("\n            Please enter a number for quantity\n")
+                        continue
+
+
+                snack = {
+                    "id": id, 
+                    "name": name, 
+                    "price": price, 
+                    "avail": avail,
+                    "quantity": quantity
+                    }
+                
            
            
         except ValueError:
