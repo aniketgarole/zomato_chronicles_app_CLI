@@ -176,6 +176,26 @@ def viewInventory():
 
 
 
+def viewOrders():
+    with open("../data/orders.txt", "r") as filer:
+        contents = filer.read()
+        if contents == "":
+            list = []
+            print("\n           No orders to show!!")
+            return 
+        
+        else:
+            list = eval(contents)
+        
+        print("\n           ********************************************Orders********************************************")
+        print("\n           {:<40} {:<10} {:<10} {:<10} {:<13} {:<10}".format("order_id", "name", "dish_id", "quantity", "total cost", "status"))
+        print("           "+"=" * 93)
+        for row in list:
+            print("           {:<40} {:<10} {:<10} {:<10} {:<13} {:<10}".format(row["order_id"], row["name"], row["dish_id"], row["quantity"], row["total_cost"], row["status"]))
+
+
+
+
 
 def mainFun():
     while True:
@@ -292,7 +312,7 @@ def mainFun():
                     order = {
                         "order_id": order_id,
                         "name": name,
-                        "snack_id": id,
+                        "dish_id": id,
                         "quantity": quantity,
                         "status": "pending"
                     }
@@ -308,6 +328,10 @@ def mainFun():
 
             elif choice == 5:
                 viewInventory()
+
+
+            elif choice == 6:
+                viewOrders()
                     
            
         except ValueError:
