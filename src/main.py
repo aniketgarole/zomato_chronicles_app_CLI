@@ -13,7 +13,7 @@ def addDish(snack):
         
         with open("../data/dishes.txt", "w") as filew:
             filew.write(str(list))
-            print("\n            Snack has been added to the inventory successfully!!\n")
+            print("\n            dish has been added to the inventory successfully!!\n")
            
 
 
@@ -35,13 +35,53 @@ def removeDish(id):
 
                 with open("../data/dishes.txt", "w") as filew:
                     filew.write(str(new_list))
-                    print("\n            Snack has been removed successfully!!\n")
+                    print("\n            Dish has been removed successfully!!\n")
                     return True
 
             else:
-                print(f"\n            The snack with id {id} does not exist, please try different id")
+                print(f"\n            The dish with id {id} does not exist, please try different id")
                 return False
 
+
+
+def changeStatus(id):
+    with open("../data/dishes.txt", "r") as filer:
+        contents = filer.read() 
+        if contents == "":
+            list = []
+            print("\n            Sorry, the inventory is empty")
+
+        else:
+            list = eval(contents)
+            
+            snack_to_update = [x for x in list if x["id"] == id] or []
+
+            
+            
+            if (len(snack_to_update)):
+
+                origional_snack = snack_to_update[0]
+                
+                enter_value = input(f"\n            The availibility status of id {id} is '{snack_to_update[0]['avail']}', if you want to change it '{'no' if snack_to_update[0]['avail'] == 'yes' else 'yes'}' please press enter")
+
+                value = 'no' if snack_to_update[0]['avail'] == 'yes' else 'yes'
+
+                snack_to_update[0]["avail"] = value
+
+
+                updated_snack = snack_to_update[0]
+                
+
+                new_list = [x if x != origional_snack else updated_snack for x in list]
+
+                with open("../data/dishes.txt", "w") as filew:
+                    filew.write(str(new_list))
+                    print("\n            Dish has been updated successfully!!\n")
+                    return True
+
+            else:
+                print(f"\n            The dish with id '{id}' does not exist, please try different id\n")
+                return False
 
 
 
@@ -115,7 +155,7 @@ def mainFun():
             elif choice == 2:
                 flag = False
                 while True:
-                    remove_id = input("\n            Enter id to remove snack or enter 'back' to go back to menu: ")
+                    remove_id = input("\n            Enter id to remove dish or enter 'back' to go back to menu: ")
 
                     if remove_id != "back":
 
@@ -134,6 +174,11 @@ def mainFun():
 
                 if flag:
                     continue
+
+            
+            elif choice == 3:
+                id = input("\n            Enter id to change the availability of dish: ")
+                changeStatus(id)
            
         except ValueError:
                 
